@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع ملفات PDF المفرزة</title>
+    
+    <style>
+        /* --- 1. تصميم شاشة التحميل --- */
+        #loader-wrapper {
+            position: fixed; /* لتغطية الشاشة بالكامل حتى عند التمرير */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff; /* لون خلفية شاشة التحميل */
+            display: flex; /* لتوسيط اللوغو في المنتصف */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* للتأكد من أنها فوق كل شيء */
+            transition: opacity 0.5s ease, visibility 0.5s; /* تأثير اختفاء ناعم */
+        }
+
+        /* --- 2. تصميم اللوغو وتحديد الحركة --- */
+        .loader-logo {
+            width: 100px; /* حجم اللوغو */
+            height: auto;
+            /* ربط الحركة باللوغو: اسم الحركة، المدة، التكرار، نوع الحركة */
+            animation: pulse-and-rotate 2s infinite ease-in-out;
+        }
+
+        /* --- 3. تعريف الحركة (CSS Keyframes) --- */
+        /* سنقوم بعمل حركة نبض (تكبير وتصغير) مع دوران بسيط */
+        @keyframes pulse-and-rotate {
+            0% {
+                transform: scale(0.9) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg); /* يكبر قليلاً ويدور */
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.9) rotate(0deg);
+                opacity: 0.7;
+            }
+        }
+
+        /* فئة (Class) سنضيفها عبر JS لإخفاء الشاشة */
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* --- تصميم بسيط لمحتوى الموقع (للتجربة فقط) --- */
+        body { font-family: sans-serif; margin: 0; padding: 20px; }
+        #main-content { text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <img src="https://via.placeholder.com/100?text=PDF" alt="اللوغو" class="loader-logo">
+    </div>
+
+    <div id="main-content">
+        <h1>مرحباً بك في مكتبة ملفات PDF</h1>
+        <p>هنا سيتم عرض الملفات المفرزة بعد انتهاء التحميل...</p>
+        <img src="https://via.placeholder.com/800x600?text=Large+Image+to+Simulate+Loading" alt="صورة كبيرة للمحاكاة">
+    </div>
+
+    <script>
+        // === 4. جافا سكريبت للتحكم في الإخفاء ===
+        
+        // ننتظر حتى يتم تحميل نافذة المتصفح بالكامل (كل الصور والملفات)
+        window.addEventListener('load', function() {
+            // نصل إلى عنصر شاشة التحميل
+            const loader = document.getElementById('loader-wrapper');
+            
+            // نضيف الفئة التي تخفي الشاشة (بسبب الترانزيشن في CSS ستختفي بنعومة)
+            loader.classList.add('loader-hidden');
+            
+            // اختياري: حذف العنصر تماماً من الـ DOM بعد اختفائه حتى لا يثقل الصفحة
+            // setTimeout(() => {
+            //     loader.remove();
+            // }, 500); // 500ms هي نفس مدة الـ transition في CSS
+        });
+    </script>
+
+</body>
+</html>
